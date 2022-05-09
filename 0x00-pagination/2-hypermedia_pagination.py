@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-1-simple_pagination
+2-hymermedia_pagination
 """
 from typing import Tuple, List, Dict, Any
 import csv
