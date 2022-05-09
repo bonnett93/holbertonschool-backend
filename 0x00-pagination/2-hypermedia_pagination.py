@@ -2,9 +2,10 @@
 """
 1-simple_pagination
 """
-from typing import Tuple, List
+from typing import Tuple, List, Dict, Any
 import csv
 import math
+from webbrowser import get
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
@@ -52,3 +53,20 @@ class Server:
             pass
         finally:
             return names_list
+
+    def get_hyper(self, page: int = 1, page_size: int = 10):
+        """Returns a pagination stats dictionary"""
+        stats = {
+            "page_size": 0, "page": page, "data": [],
+            "next_page": None, "prev_page": page - 1 if page - 1 > 0 else None,
+            "total_pages": None,
+        }
+
+        data = self.get_page(page, page_size)
+        stats["page_size"] = len(data)
+        stats["data"] = data
+        total_pages = math.ceil(len(self.__dataset) / page_size)
+        stats["total_pages"] = total_pages
+        next_page = page + 1
+        stats["next_page"] = next_page if next_page <= total_pages else None
+        return stats
