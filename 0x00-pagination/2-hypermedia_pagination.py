@@ -54,7 +54,7 @@ class Server:
         finally:
             return names_list
 
-    def get_hyper(self, page: int = 1, page_size: int = 10):
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """Returns a pagination stats dictionary"""
         stats = {
             "page_size": 0, "page": page, "data": [],
