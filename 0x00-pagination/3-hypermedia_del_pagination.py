@@ -41,18 +41,24 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """return a dictionary with stats"""
-        assert index < len(self.__indexed_dataset) and index >= 0
+        limit_index = len(self.__indexed_dataset) - 1
+        assert index <= limit_index and index >= 0
 
         keys = list(self.__indexed_dataset.keys())
-        if index in keys:
-            start_slice = keys.index(index)
-        else:
-            start_slice = index
-        keys = keys[start_slice: start_slice + page_size]
-        data = [self.__indexed_dataset[i] for i in keys]
+
+        start_slice = index
+        while start_slice <= limit_index:
+            if start_slice in keys:
+                start_slice = keys.index(start_slice)
+                break
+            else:
+                start_slice += 1
+
+        final_slice = start_slice + page_size
+        keys_page = keys[index: final_slice]
+        data = [self.__indexed_dataset[i] for i in keys_page]
         hyper_index = {
-            "index": index, "next_index": keys[0] + page_size,
+            "index": index, "next_index": keys[final_slice],
             "page_size": page_size, "data": data
         }
-        print("KEYS: ", keys)
         return hyper_index
