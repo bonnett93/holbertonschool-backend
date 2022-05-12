@@ -5,7 +5,7 @@ from base_caching import BaseCaching
 
 
 class LRUCache(BaseCaching):
-    """Least-frequently used caching system"""
+    """Least recently used (LRU) caching system"""
     def __init__(self):
         """Class constructor"""
         super().__init__()
